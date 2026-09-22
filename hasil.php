@@ -58,6 +58,7 @@ require __DIR__ . '/includes/header.php';
                 <span class="badge <?= label_badge_class($analysis['label']) ?>"><?= e($analysis['label']) ?></span>
                 <p style="margin:6px 0 0; color:var(--ink-soft); font-size:0.85rem;">Dianalisis <?= time_ago($analysis['created_at']) ?><?= $analysis['username'] ? ' oleh ' . e($analysis['username']) : '' ?></p>
                 <p class="score-note"><?= e($scoreNote) ?> · <?= e(strtoupper($analysis['input_type'])) ?> · <?= count($sources) ?> sumber</p>
+                <span class="analysis-complete"><span aria-hidden="true">&#10003;</span> Analisis selesai</span>
             </div>
         </div>
 
@@ -99,8 +100,8 @@ require __DIR__ . '/includes/header.php';
             <?php elseif (!is_logged_in()): ?>
                 <a href="login.php" class="btn btn-ghost">Login untuk simpan ke riwayat</a>
             <?php endif; ?>
-            <a href="cek-berita.php" class="btn btn-ghost">Cek berita lain</a>
         </div>
+        <a href="cek-berita.php" class="result-back result-back-bottom"><span aria-hidden="true">&#8592;</span> Kembali ke Cek Berita</a>
     </div>
 
     <?php if (is_logged_in()): ?>

@@ -48,6 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
 // ---- Filter & pencarian ----
 $q     = trim($_GET['q'] ?? '');
 $label = trim($_GET['label'] ?? '');
+$sort  = $_GET['sort'] ?? 'terbaru';
+$sortOptions = [
+    'terbaru' => 't.created_at DESC',
+    'komentar' => 'comment_count DESC, t.created_at DESC',
+    'upvote' => 'vote_count DESC, t.created_at DESC',
+];
+$sort = array_key_exists($sort, $sortOptions) ? $sort : 'terbaru';
 $page  = max(1, (int) ($_GET['page'] ?? 1));
 $perPage = 10;
 $prefillAnalysisId = !empty($_GET['dari_analisis']) ? (int) $_GET['dari_analisis'] : null;
@@ -81,7 +88,7 @@ $stmt = db()->prepare(
      FROM discussion_topics t
      LEFT JOIN users u ON u.id = t.user_id
      WHERE {$whereSql}
-     ORDER BY t.created_at DESC
+    ORDER BY {$sortOptions[$sort]}
     LIMIT :limit OFFSET :offset"
 );
 $stmt->execute($queryParams);
@@ -132,6 +139,11 @@ require __DIR__ . '/includes/header.php';
                 <option value="<?= e($l) ?>" <?= $label === $l ? 'selected' : '' ?>><?= e($l) ?></option>
             <?php endforeach; ?>
         </select>
+        <select name="sort" onchange="this.form.submit()" aria-label="Urutkan diskusi">
+            <option value="terbaru" <?= $sort === 'terbaru' ? 'selected' : '' ?>>Terbaru</option>
+            <option value="komentar" <?= $sort === 'komentar' ? 'selected' : '' ?>>Komentar terbanyak</option>
+            <option value="upvote" <?= $sort === 'upvote' ? 'selected' : '' ?>>Upvote terbanyak</option>
+        </select>
         <button type="submit" class="btn btn-ghost">Cari</button>
     </form>
 
@@ -164,7 +176,7 @@ require __DIR__ . '/includes/header.php';
             <?php if ($totalPages > 1): ?>
                 <nav class="pagination" aria-label="Halaman komunitas">
                     <?php for ($p = 1; $p <= $totalPages; $p++): ?>
-                        <a class="<?= $p === $page ? 'active' : '' ?>" href="?q=<?= urlencode($q) ?>&label=<?= urlencode($label) ?>&page=<?= $p ?>"><?= $p ?></a>
+                        <a class="<?= $p === $page ? 'active' : '' ?>" href="?q=<?= urlencode($q) ?>&label=<?= urlencode($label) ?>&sort=<?= urlencode($sort) ?>&page=<?= $p ?>"><?= $p ?></a>
                     <?php endfor; ?>
                 </nav>
             <?php endif; ?>

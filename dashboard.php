@@ -49,7 +49,7 @@ require __DIR__ . '/includes/header.php';
 <section class="container" style="padding-top:32px;">
     <div class="dashboard-heading">
         <div>
-            <p class="hero-eyebrow">Ruang pribadi</p>
+            <p class="hero-eyebrow">Ringkasan aktivitasmu</p>
             <h1>Dashboard Saya</h1>
             <p class="hero-sub">Pantau perjalananmu dalam memeriksa informasi dan ikut menjaga ruang diskusi tetap sehat.</p>
         </div>

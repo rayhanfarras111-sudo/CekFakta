@@ -158,7 +158,7 @@ require __DIR__ . '/includes/header.php';
     <?php endforeach; ?>
 
     <div class="check-workspace">
-        <form class="check-form js-once" action="cek-berita.php" method="POST" enctype="multipart/form-data" style="margin-top:8px;">
+        <form class="check-form js-once analysis-form" action="cek-berita.php" method="POST" enctype="multipart/form-data" style="margin-top:8px;">
             <?= csrf_field() ?>
             <div class="form-title-row"><div><span class="form-step">01</span><h2>Masukkan klaim</h2></div><span class="input-badge">AI assisted</span></div>
             <label for="pesan_user">Teks atau tautan berita</label>
@@ -182,6 +182,10 @@ require __DIR__ . '/includes/header.php';
             <div class="check-form-row">
                 <button type="submit" class="btn btn-primary" <?= $isLoggedIn ? '' : 'disabled' ?>>Analisis Sekarang <span aria-hidden="true">&rarr;</span></button>
                 <span class="form-note">Hasil bukan keputusan final.</span>
+            </div>
+            <div class="analysis-loading" aria-live="polite" hidden>
+                <span class="loading-orbit" aria-hidden="true"></span>
+                <div><strong>Sedang memeriksa klaim...</strong><small>Membandingkan informasi dengan sumber yang tersedia.</small></div>
             </div>
         </form>
 

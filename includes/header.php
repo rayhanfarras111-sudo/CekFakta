@@ -62,7 +62,7 @@ if (is_logged_in()) {
             <?php endif; ?>
         </div>
 
-        <button class="nav-burger" aria-label="Buka menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+        <button type="button" class="nav-burger" aria-label="Buka menu" aria-expanded="false" data-nav-toggle>&#9776;</button>
     </div>
 </header>
 <main>
@@ -70,8 +70,8 @@ if (is_logged_in()) {
 $flashSuccess = flash_get('flash_success');
 $flashError   = flash_get('flash_error');
 if ($flashSuccess): ?>
-    <div class="container"><div class="alert alert-success"><?= e($flashSuccess) ?></div></div>
+    <div class="container"><div class="alert alert-success toast-message" role="status"><?= e($flashSuccess) ?></div></div>
 <?php endif;
 if ($flashError): ?>
-    <div class="container"><div class="alert alert-error"><?= e($flashError) ?></div></div>
+    <div class="container"><div class="alert alert-error toast-message" role="alert"><?= e($flashError) ?></div></div>
 <?php endif; ?>

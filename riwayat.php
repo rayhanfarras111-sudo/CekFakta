@@ -11,6 +11,12 @@ $endDate   = trim($_GET['end'] ?? '');
 $q         = trim($_GET['q'] ?? '');
 $page      = max(1, (int) ($_GET['page'] ?? 1));
 $perPage   = 10;
+$dateFilterNotice = '';
+
+if ($startDate !== '' && $endDate !== '' && $endDate < $startDate) {
+    $endDate = $startDate;
+    $dateFilterNotice = 'Tanggal akhir disesuaikan dengan tanggal mulai.';
+}
 
 $where  = ['user_id = :uid'];
 $params = [':uid' => $userId];
@@ -64,11 +70,13 @@ require __DIR__ . '/includes/header.php';
                 <option value="<?= e($l) ?>" <?= $label === $l ? 'selected' : '' ?>><?= e($l) ?></option>
             <?php endforeach; ?>
         </select>
-        <input type="date" name="start" value="<?= e($startDate) ?>" onchange="this.form.submit()">
-        <input type="date" name="end" value="<?= e($endDate) ?>" onchange="this.form.submit()">
+        <input type="date" name="start" id="history-start" value="<?= e($startDate) ?>" onchange="this.form.submit()">
+        <input type="date" name="end" id="history-end" value="<?= e($endDate) ?>" min="<?= e($startDate) ?>" onchange="this.form.submit()">
         <input type="search" name="q" placeholder="Cari klaim..." value="<?= e($q) ?>">
         <button type="submit" class="btn btn-ghost">Terapkan</button>
     </form>
+
+    <?php if ($dateFilterNotice): ?><div class="alert alert-error date-filter-notice"><?= e($dateFilterNotice) ?></div><?php endif; ?>
 
     <?php if (empty($history)): ?>
         <div class="empty-state">
