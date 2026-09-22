@@ -41,9 +41,12 @@ $page = min($page, $totalPages);
 $offset = ($page - 1) * $perPage;
 
 $stmt = db()->prepare("SELECT * FROM analyses WHERE {$whereSql} ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
+foreach ($params as $key => $value) {
+    $stmt->bindValue($key, $value);
+}
 $stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-$stmt->execute($params);
+$stmt->execute();
 $history = $stmt->fetchAll();
 
 $pageTitle = 'Riwayat Pribadi';
