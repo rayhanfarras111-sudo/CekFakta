@@ -591,3 +591,11 @@ th { color: var(--merah-tua); font-family: 'Poppins', sans-serif; font-size: 0.8
 @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; scroll-behavior: auto !important; }
 }
+
+.upload-preview { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--line); border-radius: var(--radius-s); background: var(--paper); }
+.upload-preview img { width: 48px; height: 48px; object-fit: cover; border-radius: 6px; }
+.upload-preview-info { flex: 1; min-width: 0; }
+.upload-preview-info strong { display: block; font-size: 0.85rem; color: var(--merah-tua); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.upload-preview-info small { color: var(--ink-soft); font-size: 0.75rem; }
+.upload-preview-remove { border: none; background: none; font-size: 1.2rem; line-height: 1; color: var(--ink-soft); cursor: pointer; padding: 4px 8px; }
+.upload-preview-remove:hover { color: var(--merah); }

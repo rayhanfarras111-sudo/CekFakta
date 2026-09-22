@@ -28,3 +28,34 @@ document.querySelectorAll('[data-copy-url]').forEach(function (button) {
         });
     });
 });
+// Tampilkan nama file + thumbnail preview begitu screenshot dipilih
+var screenshotInput = document.getElementById('screenshot');
+if (screenshotInput) {
+    var preview     = document.getElementById('upload-preview');
+    var previewImg  = document.getElementById('upload-preview-img');
+    var previewName = document.getElementById('upload-preview-name');
+    var previewSize = document.getElementById('upload-preview-size');
+    var uploadBox   = document.getElementById('upload-box');
+    var removeBtn   = document.getElementById('upload-preview-remove');
+
+    screenshotInput.addEventListener('change', function () {
+        var file = screenshotInput.files[0];
+        if (!file) return;
+
+        previewName.textContent = file.name;
+        previewSize.textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+
+        var reader = new FileReader();
+        reader.onload = function (e) { previewImg.src = e.target.result; };
+        reader.readAsDataURL(file);
+
+        preview.style.display = 'flex';
+        uploadBox.style.display = 'none';
+    });
+
+    removeBtn.addEventListener('click', function () {
+        screenshotInput.value = '';
+        preview.style.display = 'none';
+        uploadBox.style.display = 'flex';
+    });
+}

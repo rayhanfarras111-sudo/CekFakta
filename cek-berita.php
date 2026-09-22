@@ -165,10 +165,18 @@ require __DIR__ . '/includes/header.php';
             <textarea name="pesan_user" id="pesan_user" placeholder="<?= $isLoggedIn ? 'Tulis atau tempel di sini...' : 'Login terlebih dahulu untuk menggunakan fitur ini.' ?>" <?= $isLoggedIn ? '' : 'disabled' ?>><?= e($_POST['pesan_user'] ?? '') ?></textarea>
 
             <div class="upload-divider"><span>atau gunakan bukti visual</span></div>
-            <div class="upload-box">
+            <div class="upload-box" id="upload-box">
                 <span class="upload-icon">+</span>
                 <div><label for="screenshot">Unggah screenshot berita</label><small>JPG, PNG, WEBP · maksimal 5MB</small></div>
                 <input type="file" name="screenshot" id="screenshot" accept=".jpg,.jpeg,.png,.webp" <?= $isLoggedIn ? '' : 'disabled' ?>>
+            </div>
+            <div class="upload-preview" id="upload-preview" style="display:none;">
+                <img id="upload-preview-img" alt="Preview screenshot">
+                <div class="upload-preview-info">
+                    <strong id="upload-preview-name"></strong>
+                    <small id="upload-preview-size"></small>
+                </div>
+                <button type="button" id="upload-preview-remove" class="upload-preview-remove" aria-label="Hapus screenshot">&times;</button>
             </div>
 
             <div class="check-form-row">
